@@ -1,0 +1,52 @@
+CARPETA DE IMAGENES — Escaleras y Serpientes a lo Bosque
+Universidad El Bosque — Estructura de Datos
+=========================================================
+
+Esta carpeta debe contener los archivos PNG que el juego usara
+para dibujar las serpientes y escaleras sobre el tablero.
+
+ARCHIVOS REQUERIDOS
+-------------------
+
+  serpiente.png
+    Imagen de una serpiente vista desde arriba o de perfil.
+    Se recomienda una serpiente horizontal con la cabeza a la derecha
+    y la cola a la izquierda, sobre fondo transparente (PNG con alpha).
+    Tamanio sugerido: 200 x 60 pixeles o superior.
+    El juego la estirara y rotara automaticamente entre la casilla
+    de cabeza y la casilla de cola.
+
+  escalera.png
+    Imagen de una escalera de madera o metalica, orientada horizontalmente.
+    Se recomienda la escalera apoyada a la derecha (cima) y a la izquierda (base),
+    sobre fondo transparente (PNG con alpha).
+    Tamanio sugerido: 200 x 60 pixeles o superior.
+    El juego la estirara y rotara automaticamente entre la casilla
+    de base y la casilla de cima.
+
+COMPORTAMIENTO SIN IMAGENES
+----------------------------
+
+Si alguno de los archivos PNG no existe o no se puede cargar,
+el juego dibujara automaticamente un rectangulo redondeado de color
+como reemplazo visual (fallback):
+
+  - Serpiente: rectangulo marron semitransparente
+  - Escalera:  rectangulo verde semitransparente
+
+El juego funciona correctamente sin estos archivos.
+Agregarlos solo mejora la presentacion visual del tablero.
+
+NOTAS TECNICAS
+--------------
+
+  - Formato admitido: PNG (recomendado con canal alpha / transparencia)
+  - Los archivos deben llamarse exactamente:
+      serpiente.png
+      escalera.png
+    (minusculas, sin espacios, sin tildes)
+  - La ruta relativa usada por el codigo es:
+      archivos/imagenes/serpiente.png
+      archivos/imagenes/escalera.png
+  - Esta ruta es relativa a la raiz del proyecto Eclipse.
+    Ejecutar siempre desde Eclipse o desde la carpeta raiz del proyecto.
