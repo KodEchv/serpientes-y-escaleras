@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 
 import co.edu.unbosque.model.CasillaDTO;
 import co.edu.unbosque.model.JugadorDTO;
-import co.edu.unbosque.model.facade.ModelFacade;
+import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.utils.exception.EstructuraVaciaException;
 import co.edu.unbosque.utils.exception.PartidaNoIniciadaException;
 import co.edu.unbosque.utils.exception.PosicionInvalidaException;
 import co.edu.unbosque.view.VentanaPrincipal;
-import co.edu.unbosque.view.facade.ViewFacade;
+import co.edu.unbosque.view.ViewFacade;
 
 /**
  * Controlador principal del juego "Escaleras y Serpientes a lo Bosque".
@@ -20,12 +20,6 @@ import co.edu.unbosque.view.facade.ViewFacade;
  * <p>No contiene logica de negocio: toda operacion se delega a ModelFacade.
  * Se limita a leer la configuracion de la vista, invocar el modelo y
  * refrescar la vista con el resultado.</p>
- *
- * <p>Sustituye a JuegoController. Para usar esta clase, eliminar
- * JuegoController.java del paquete co.edu.unbosque.controller.</p>
- *
- * @author Estudiante
- * @version 1.0
  */
 public class Controlador {
 
@@ -101,6 +95,14 @@ public class Controlador {
                 accionFinalizarPartida();
             }
         });
+
+        // Listener del boton REGRESAR AL MENU (panel de control del juego)
+        vista.setListenerRegresar(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vista.mostrarMenu();
+            }
+        });
     }
 
     // =========================================================================
@@ -114,17 +116,17 @@ public class Controlador {
      * refresca la vista con el estado inicial y navega al panel de juego.
      */
     private void accionIniciarPartida() {
-        String[] nombres = vista.obtenerNombresJugadores();
-
-        // Validar que todos los nombres sean no vacios antes de iniciar
-        if (!validarNombres(nombres, 0)) {
-            System.err.println("[Controlador] Error: hay nombres de jugadores vacios. "
-                    + "Completar todos los campos antes de iniciar.");
+        // Validar nombres desde la vista (muestra dialogo si hay vacios)
+        if (!vista.validarNombres()) {
             return;
         }
 
+        String[] nombres        = vista.obtenerNombresJugadores();
+        int cantSerpientes      = vista.obtenerCantidadSerpientes();
+        int cantEscaleras       = vista.obtenerCantidadEscaleras();
+
         try {
-            modelo.iniciarPartida(nombres);
+            modelo.iniciarPartida(nombres, cantSerpientes, cantEscaleras);
         } catch (PosicionInvalidaException ex) {
             System.err.println("[Controlador] Error al construir el tablero: " + ex.getMessage());
             return;
@@ -279,32 +281,6 @@ public class Controlador {
     // =========================================================================
     // METODOS RECURSIVOS
     // =========================================================================
-
-    /**
-     * Valida recursivamente que todos los nombres del array sean no nulos
-     * y no vacios (despues de aplicar trim()).
-     *
-     * <p>Caso base: indice igual o mayor que la longitud del array — todos
-     * los nombres fueron validados, retorna true.</p>
-     * <p>Caso recursivo: si el nombre en la posicion actual es nulo o vacio,
-     * retorna false; de lo contrario avanza al siguiente indice.</p>
-     *
-     * @param nombres Array de nombres ingresados por el usuario.
-     * @param indice  Posicion actual del array en la recursion (iniciar con 0).
-     * @return true si todos los nombres son validos, false si alguno esta vacio.
-     */
-    private boolean validarNombres(String[] nombres, int indice) {
-        // Caso base: se revisaron todos los nombres sin encontrar invalidos
-        if (indice >= nombres.length) {
-            return true;
-        }
-        // Si el nombre actual es nulo o esta en blanco, la validacion falla
-        if (nombres[indice] == null || nombres[indice].trim().isEmpty()) {
-            return false;
-        }
-        // Avanzar al siguiente nombre
-        return validarNombres(nombres, indice + 1);
-    }
 
     /**
      * Determina recursivamente el jugador con mayor posicion en el tablero.

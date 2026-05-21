@@ -16,8 +16,6 @@ import javax.swing.SwingConstants;
  * Los eventos se agregan cronologicamente y el panel hace scroll automatico
  * hacia el evento mas reciente.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelHistorial extends JPanel {
 

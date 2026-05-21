@@ -4,8 +4,6 @@ package co.edu.unbosque.model;
  * DTO que representa un jugador dentro del juego Escaleras y Serpientes.
  * Almacena el estado actual del jugador durante una partida.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class JugadorDTO {
 

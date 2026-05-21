@@ -9,8 +9,6 @@ package co.edu.unbosque.model;
  * es: {@code posicionFinal * 1000 - cantidadTurnos}, de modo que mayor posicion
  * con menos turnos queda mas alto en el arbol.</p>
  *
- * @author Estudiante
- * @version 1.0
  */
 public class RankingDTO implements Comparable<RankingDTO> {
 

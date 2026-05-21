@@ -17,8 +17,6 @@ import javax.swing.JPanel;
  * Panel del menu principal del juego "Escaleras y Serpientes a lo Bosque".
  * Muestra el titulo del juego y el boton para iniciar la configuracion de partida.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelMenuInicio extends JPanel {
 

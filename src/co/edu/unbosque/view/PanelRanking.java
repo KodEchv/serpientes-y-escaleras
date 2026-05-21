@@ -18,8 +18,6 @@ import co.edu.unbosque.model.JugadorDTO;
  * el algoritmo de burbuja implementado con recursividad.
  * Muestra hasta 4 filas, una por jugador.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelRanking extends JPanel {
 

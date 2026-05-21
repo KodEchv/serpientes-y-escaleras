@@ -16,8 +16,6 @@ import co.edu.unbosque.model.JugadorDTO;
  * Dibuja un circulo con el color del jugador, su nombre, posicion actual
  * y los indicadores de escudo y doble turno si los tiene activos.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelInfoJugador extends JPanel {
 

@@ -5,8 +5,6 @@ package co.edu.unbosque.model;
  * Una escalera conecta una casilla base (posicion baja) con una casilla cima
  * (posicion alta), haciendo que el jugador avance al caer en la base.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class EscaleraDTO {
 

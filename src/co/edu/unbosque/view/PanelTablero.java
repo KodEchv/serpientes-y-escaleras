@@ -13,7 +13,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import co.edu.unbosque.util.GeneradorImagenes;
+import co.edu.unbosque.utils.GeneradorImagenes;
 
 import co.edu.unbosque.model.CasillaDTO;
 import co.edu.unbosque.model.CasillaDTO.TipoCasilla;
@@ -34,8 +34,6 @@ import co.edu.unbosque.model.JugadorDTO;
  * Si la imagen no esta disponible, se dibuja un rectangulo redondeado de color
  * como fallback visual.</p>
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelTablero extends JPanel {
 

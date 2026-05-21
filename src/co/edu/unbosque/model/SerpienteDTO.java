@@ -5,8 +5,6 @@ package co.edu.unbosque.model;
  * Una serpiente conecta una casilla de cabeza (posicion alta) con una casilla
  * de cola (posicion baja), haciendo que el jugador retroceda al caer en la cabeza.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class SerpienteDTO {
 

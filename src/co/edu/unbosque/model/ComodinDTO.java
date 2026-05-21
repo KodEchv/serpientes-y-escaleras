@@ -22,8 +22,6 @@ package co.edu.unbosque.model;
  * No tiene tipo, no tiene posicion destino precalculada ni peso de arista,
  * ya que todos esos calculos ocurren en tiempo de ejecucion.</p>
  *
- * @author Estudiante
- * @version 2.0
  */
 public class ComodinDTO {
 

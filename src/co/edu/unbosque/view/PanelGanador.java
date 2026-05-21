@@ -22,8 +22,6 @@ import co.edu.unbosque.model.RankingDTO;
  * el ranking completo ordenado, estadisticas globales del juego
  * y botones para iniciar una nueva partida o salir.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelGanador extends JPanel {
 

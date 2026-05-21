@@ -9,12 +9,6 @@ import co.edu.unbosque.view.VentanaPrincipal;
  * Lanza la interfaz grafica en el hilo de despacho de eventos de Swing
  * usando SwingUtilities.invokeLater para garantizar la seguridad del hilo.
  *
- * <p>NOTA: JuegoController.java fue reemplazado por Controlador.java.
- * Si JuegoController.java aun existe en este paquete, debe eliminarse
- * manualmente desde el explorador de Eclipse para evitar conflictos.</p>
- *
- * @author Estudiante
- * @version 1.0
  */
 public class AppMain {
 

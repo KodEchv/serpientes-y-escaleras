@@ -1,2 +1,0 @@
-- [Perfil del usuario](user_perfil.md) — estudiante de Ing. Sistemas, Universidad El Bosque, materia Estructura de Datos
-- [Proyecto Escaleras y Serpientes](project_escaleras.md) — juego Java puro Eclipse, sin ciclos, todo recursivo, paquete co.edu.unbosque

@@ -13,8 +13,6 @@ import co.edu.unbosque.model.JugadorDTO;
  * Combina el tablero visual de 10x10 (centro) con el panel lateral de control
  * (este), que agrupa la informacion del jugador, el dado, el ranking y el historial.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelJuego extends JPanel {
 
@@ -51,7 +49,7 @@ public class PanelJuego extends JPanel {
         setOpaque(true);
 
         panelTablero      = new PanelTablero();
-        panelControlJuego = new PanelControlJuego();
+        panelControlJuego = new PanelControlJuego(ventana);
         panelControlJuego.setPreferredSize(new Dimension(265, 0));
 
         add(panelTablero,      BorderLayout.CENTER);

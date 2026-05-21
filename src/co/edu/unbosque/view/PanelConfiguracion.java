@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -21,9 +22,6 @@ import javax.swing.SwingConstants;
  * Panel de configuracion de la partida.
  * Permite seleccionar la cantidad de jugadores, sus nombres,
  * y la cantidad de serpientes y escaleras en el tablero.
- *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelConfiguracion extends JPanel {
 
@@ -246,11 +244,11 @@ public class PanelConfiguracion extends JPanel {
         labelSerpientes.setPreferredSize(new Dimension(100, 20));
         filaSerpientes.add(labelSerpientes);
 
-        Integer[] valoresSerpientes = {8, 9, 10, 11, 12};
+        Integer[] valoresSerpientes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         comboSerpientes = new JComboBox<>(valoresSerpientes);
         comboSerpientes.setFont(new Font("SansSerif", Font.PLAIN, 13));
         comboSerpientes.setPreferredSize(new Dimension(80, 28));
-        comboSerpientes.setSelectedItem(10);
+        comboSerpientes.setSelectedItem(8);
         filaSerpientes.add(comboSerpientes);
         panel.add(filaSerpientes);
 
@@ -265,11 +263,11 @@ public class PanelConfiguracion extends JPanel {
         labelEscaleras.setPreferredSize(new Dimension(100, 20));
         filaEscaleras.add(labelEscaleras);
 
-        Integer[] valoresEscaleras = {8, 9, 10, 11, 12};
+        Integer[] valoresEscaleras = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         comboEscaleras = new JComboBox<>(valoresEscaleras);
         comboEscaleras.setFont(new Font("SansSerif", Font.PLAIN, 13));
         comboEscaleras.setPreferredSize(new Dimension(80, 28));
-        comboEscaleras.setSelectedItem(10);
+        comboEscaleras.setSelectedItem(8);
         filaEscaleras.add(comboEscaleras);
         panel.add(filaEscaleras);
 
@@ -349,18 +347,51 @@ public class PanelConfiguracion extends JPanel {
     // ---------------------------------------------------------------
 
     /**
-     * Retorna los nombres ingresados para los jugadores activos.
-     * Si un campo esta vacio, usa "Jugador N" como nombre por defecto.
+     * Retorna los nombres ingresados para los jugadores activos, tal como
+     * fueron escritos (sin relleno por defecto). Si un campo esta vacio,
+     * retorna cadena vacia en esa posicion.
      *
-     * @return Array de String con los nombres de los jugadores.
+     * @return Array de String con los nombres de los jugadores activos.
      */
     public String[] obtenerNombresJugadores() {
         String[] nombres = new String[cantidadSeleccionada];
         for (int i = 0; i < cantidadSeleccionada; i++) {
-            String nombre = camposNombres[i].getText().trim();
-            nombres[i] = nombre.isEmpty() ? "Jugador " + (i + 1) : nombre;
+            nombres[i] = camposNombres[i].getText().trim();
         }
         return nombres;
+    }
+
+    /**
+     * Verifica que todos los campos de nombre activos esten llenos.
+     * Si alguno esta vacio muestra un JOptionPane de advertencia y retorna false.
+     *
+     * @return true si todos los nombres son validos.
+     */
+    public boolean validarNombres() {
+        return validarNombresRecursivo(0);
+    }
+
+    /**
+     * Recorre recursivamente los campos de nombre validando que no esten vacios.
+     *
+     * @param indice Indice actual del campo en la recursion.
+     * @return true si todos los campos son validos desde este indice en adelante.
+     */
+    private boolean validarNombresRecursivo(int indice) {
+        if (indice >= cantidadSeleccionada) {
+            return true;
+        }
+        if (camposNombres[indice].getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "El nombre del Jugador " + (indice + 1) + " no puede estar vacio.",
+                    "Nombre requerido",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            camposNombres[indice].requestFocus();
+            return false;
+        }
+        return validarNombresRecursivo(indice + 1);
     }
 
     /**

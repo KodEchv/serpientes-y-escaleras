@@ -5,8 +5,6 @@ package co.edu.unbosque.model;
  * Cada casilla tiene un numero unico del 1 al 100 y un tipo que determina
  * el comportamiento especial que puede tener dentro del juego.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class CasillaDTO {
 

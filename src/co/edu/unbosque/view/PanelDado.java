@@ -19,8 +19,6 @@ import javax.swing.SwingConstants;
  * Dibuja un cuadrado redondeado con el valor actual del dado.
  * Si no se ha lanzado aun, muestra un signo de interrogacion.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class PanelDado extends JPanel {
 

@@ -4,8 +4,6 @@ package co.edu.unbosque.model;
  * DTO que representa un movimiento realizado por un jugador durante la partida.
  * Se usa para registrar el historial de movimientos del juego.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class MovimientoDTO {
 

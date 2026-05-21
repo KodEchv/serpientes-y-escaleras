@@ -12,8 +12,6 @@ import javax.swing.JPanel;
  * Define ademas todas las constantes de color y claves de navegacion
  * usadas por los demas paneles de la vista.
  *
- * @author Estudiante
- * @version 1.0
  */
 public class VentanaPrincipal extends JFrame {
 

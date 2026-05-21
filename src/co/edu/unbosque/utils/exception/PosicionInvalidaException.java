@@ -1,34 +1,14 @@
 package co.edu.unbosque.utils.exception;
 
 /**
- * Excepcion que se lanza cuando se intenta acceder o asignar una posicion
- * que no es valida dentro del tablero (menor a 1 o mayor a 100) o cuando
- * una restriccion de generacion no se puede cumplir (ej: base >= cima).
- *
- * @author Estudiante
- * @version 1.0
+ * Se lanza cuando una posicion es invalida en el tablero (fuera del rango 1-100)
+ * o cuando la generacion aleatoria no puede colocar un elemento sin conflictos.
  */
 public class PosicionInvalidaException extends Exception {
 
-    /** Serial version para serializacion. */
     private static final long serialVersionUID = 2L;
 
-    /**
-     * Constructor con mensaje de error.
-     *
-     * @param mensaje Descripcion del error de posicion.
-     */
-    public PosicionInvalidaException(String mensaje) {
-        super(mensaje);
-    }
-
-    /**
-     * Constructor con mensaje y causa raiz.
-     *
-     * @param mensaje Descripcion del error.
-     * @param causa   Excepcion que origino este error.
-     */
-    public PosicionInvalidaException(String mensaje, Throwable causa) {
-        super(mensaje, causa);
+    public PosicionInvalidaException() {
+        super("La posicion es invalida: fuera del rango permitido o no se pudo colocar el elemento.");
     }
 }
