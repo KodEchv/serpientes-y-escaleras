@@ -10,7 +10,9 @@ package co.edu.unbosque.model;
  * con menos turnos queda mas alto en el arbol.</p>
  *
  */
-public class RankingDTO implements Comparable<RankingDTO> {
+public class RankingDTO implements Comparable<RankingDTO>, java.io.Serializable {
+
+    private static final long serialVersionUID = 6L;
 
     /** Nombre del jugador registrado en el ranking. */
     private String nombreJugador;

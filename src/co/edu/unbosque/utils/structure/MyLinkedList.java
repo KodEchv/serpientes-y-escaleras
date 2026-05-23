@@ -1,6 +1,8 @@
 package co.edu.unbosque.utils.structure;
 
-public class MyLinkedList<E> {
+public class MyLinkedList<E> implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1001L;
 
 	protected Node<E> first;
 

@@ -6,7 +6,9 @@ package co.edu.unbosque.model;
  * (posicion alta), haciendo que el jugador avance al caer en la base.
  *
  */
-public class EscaleraDTO {
+public class EscaleraDTO implements java.io.Serializable {
+
+    private static final long serialVersionUID = 3L;
 
     /** Posicion de la base de la escalera (casilla donde cae el jugador). */
     private int posicionBase;

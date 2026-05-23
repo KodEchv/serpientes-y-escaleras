@@ -6,7 +6,9 @@ package co.edu.unbosque.model;
  * de cola (posicion baja), haciendo que el jugador retroceda al caer en la cabeza.
  *
  */
-public class SerpienteDTO {
+public class SerpienteDTO implements java.io.Serializable {
+
+    private static final long serialVersionUID = 7L;
 
     /** Posicion de la cabeza de la serpiente (casilla donde cae el jugador). */
     private int posicionCabeza;

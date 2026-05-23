@@ -5,7 +5,9 @@ package co.edu.unbosque.model;
  * Se usa para registrar el historial de movimientos del juego.
  *
  */
-public class MovimientoDTO {
+public class MovimientoDTO implements java.io.Serializable {
+
+    private static final long serialVersionUID = 5L;
 
     /** Nombre del jugador que realizo el movimiento. */
     private String nombreJugador;

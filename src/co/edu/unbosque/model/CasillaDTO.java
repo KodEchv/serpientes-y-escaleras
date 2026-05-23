@@ -1,12 +1,16 @@
 package co.edu.unbosque.model;
 
+import java.io.Serializable;
+
 /**
  * DTO que representa una casilla del tablero del juego Escaleras y Serpientes.
  * Cada casilla tiene un numero unico del 1 al 100 y un tipo que determina
  * el comportamiento especial que puede tener dentro del juego.
  *
  */
-public class CasillaDTO {
+public class CasillaDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Enumeracion de los tipos posibles de una casilla del tablero.

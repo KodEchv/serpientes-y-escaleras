@@ -5,7 +5,9 @@ package co.edu.unbosque.model;
  * Almacena el estado actual del jugador durante una partida.
  *
  */
-public class JugadorDTO {
+public class JugadorDTO implements java.io.Serializable {
+
+    private static final long serialVersionUID = 4L;
 
     /** Nombre del jugador. */
     private String nombre;

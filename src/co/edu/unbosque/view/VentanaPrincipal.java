@@ -167,6 +167,15 @@ public class VentanaPrincipal extends JFrame {
     // ---------------------------------------------------------------
 
     /**
+     * Retorna el panel del menu de inicio.
+     *
+     * @return PanelMenuInicio actual.
+     */
+    public PanelMenuInicio getPanelMenu() {
+        return panelMenu;
+    }
+
+    /**
      * Retorna el panel del juego activo.
      *
      * @return PanelJuego actual.

@@ -1,66 +1,139 @@
 package co.edu.unbosque.model.persistence;
 
-import co.edu.unbosque.model.JugadorDTO;
+import co.edu.unbosque.model.Jugador;
 import co.edu.unbosque.utils.structure.MyLinkedList;
+import co.edu.unbosque.utils.structure.Node;
 
-/**
- * Interfaz DAO que define las operaciones sobre la coleccion de jugadores
- * de una partida de Escaleras y Serpientes.
- * @see JugadorDAOImpl
- */
-public interface JugadorDAO {
+public class JugadorDAO implements OperacionDAO<Jugador> {
 
-    /**
-     * Agrega un jugador a la coleccion de jugadores de la partida.
-     *
-     * @param jugador El JugadorDTO a agregar. No debe ser null.
-     */
-    void agregarJugador(JugadorDTO jugador);
+    private final String NOMBRE_ARCHIVO_SERIALIZADO = "jugador.bin";
+    private MyLinkedList<Jugador> listaJugador;
 
-    /**
-     * Busca un jugador por su nombre en la coleccion.
-     *
-     * @param nombre Nombre del jugador a buscar.
-     * @return El JugadorDTO encontrado, o null si no existe.
-     */
-    JugadorDTO buscarJugador(String nombre);
+    public JugadorDAO() {
+        listaJugador = new MyLinkedList<>();
+        leerArchivoSerializado();
+    }
 
-    /**
-     * Obtiene el primer jugador que se encuentre en la casilla indicada.
-     * Util para detectar colisiones entre jugadores.
-     *
-     * @param posicion Numero de casilla donde se busca un jugador (1 a 100).
-     * @return El JugadorDTO que esta en esa casilla, o null si ninguno esta ahi.
-     */
-    JugadorDTO obtenerJugadorEnPosicion(int posicion);
+    @Override
+    public void crear(Jugador nuevoDato) {
+        listaJugador.addLast(nuevoDato);
+        escribirArchivoSerializado();
+    }
 
-    /**
-     * Elimina un jugador de la coleccion por su nombre.
-     * Si el jugador no existe, no hace nada.
-     *
-     * @param nombre Nombre del jugador a eliminar.
-     */
-    void eliminarJugador(String nombre);
+    @Override
+    public MyLinkedList<Jugador> obtenerLista() {
+        return listaJugador;
+    }
 
-    /**
-     * Retorna la cantidad de jugadores registrados en la coleccion.
-     *
-     * @return Numero de jugadores activos.
-     */
-    int cantidadJugadores();
+    @Override
+    public String imprimirLista() {
+        if (listaJugador.isEmpty()) {
+            return "No hay jugadores registrados";
+        }
+        return imprimirRecursivo(listaJugador.getFirst(), 0);
+    }
 
-    /**
-     * Verifica si la coleccion de jugadores esta vacia.
-     *
-     * @return true si no hay jugadores registrados, false en caso contrario.
-     */
-    boolean estaVacia();
+    @Override
+    public boolean eliminarDato(int indice) {
+        if (indice < 0 || indice >= listaJugador.size()) {
+            return false;
+        }
+        if (indice == 0) {
+            listaJugador.extract();
+        } else {
+            eliminarEnIndiceRecursivo(listaJugador.getFirst(), indice, 0);
+        }
+        escribirArchivoSerializado();
+        return true;
+    }
 
-    /**
-     * Retorna la lista enlazada completa de todos los jugadores registrados.
-     * Se usa para iterar recursivamente sobre los jugadores en otras capas.
-     *
-     * @return La {@link MyLinkedList} interna con todos los jugadores.
-     */
-    MyLinkedList<JugadorDTO> obtenerTodos();
+    @Override
+    public boolean actualizarDato(int indice, Jugador datoActualizado) {
+        if (indice < 0 || indice >= listaJugador.size()) {
+            return false;
+        }
+        actualizarEnIndiceRecursivo(listaJugador.getFirst(), indice, 0, datoActualizado);
+        escribirArchivoSerializado();
+        return true;
+    }
+
+    public void escribirArchivoSerializado() {
+        FileHandler.checkFolder();
+        FileHandler.writeSerializer(NOMBRE_ARCHIVO_SERIALIZADO, listaJugador);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void leerArchivoSerializado() {
+        Object obj = FileHandler.readSerialized(NOMBRE_ARCHIVO_SERIALIZADO);
+        listaJugador = (obj != null) ? (MyLinkedList<Jugador>) obj : new MyLinkedList<>();
+    }
+
+    public Jugador buscarJugador(String nombre) {
+        return buscarPorNombreRecursivo(listaJugador.getFirst(), nombre);
+    }
+
+    public int cantidadJugadores() {
+        return contarRecursivo(listaJugador.getFirst());
+    }
+
+    public boolean estaVacia() {
+        return listaJugador.isEmpty();
+    }
+
+    public MyLinkedList<Jugador> getListaJugador() { return listaJugador; }
+    public void setListaJugador(MyLinkedList<Jugador> listaJugador) { this.listaJugador = listaJugador; }
+
+    private String imprimirRecursivo(Node<Jugador> nodo, int indice) {
+        if (nodo == null) {
+            return "";
+        }
+        Jugador j = nodo.getInfo();
+        String linea = "-----------------------------------\n"
+                + "Indice: " + indice + "\n"
+                + "Nombre: " + j.getNombre() + "\n"
+                + "Posicion: " + j.getPosicionActual() + "\n"
+                + "Turnos: " + j.getCantidadTurnos() + "\n";
+        return linea + imprimirRecursivo(nodo.getNext(), indice + 1);
+    }
+
+    private void eliminarEnIndiceRecursivo(Node<Jugador> anterior, int objetivo, int actual) {
+        Node<Jugador> siguiente = anterior.getNext();
+        if (siguiente == null) {
+            return;
+        }
+        if (actual + 1 == objetivo) {
+            anterior.setNext(siguiente.getNext());
+            return;
+        }
+        eliminarEnIndiceRecursivo(siguiente, objetivo, actual + 1);
+    }
+
+    private void actualizarEnIndiceRecursivo(Node<Jugador> nodo, int objetivo, int actual,
+            Jugador datoActualizado) {
+        if (nodo == null) {
+            return;
+        }
+        if (actual == objetivo) {
+            nodo.setInfo(datoActualizado);
+            return;
+        }
+        actualizarEnIndiceRecursivo(nodo.getNext(), objetivo, actual + 1, datoActualizado);
+    }
+
+    private Jugador buscarPorNombreRecursivo(Node<Jugador> nodo, String nombre) {
+        if (nodo == null) {
+            return null;
+        }
+        if (nodo.getInfo().getNombre().equals(nombre)) {
+            return nodo.getInfo();
+        }
+        return buscarPorNombreRecursivo(nodo.getNext(), nombre);
+    }
+
+    private int contarRecursivo(Node<Jugador> nodo) {
+        if (nodo == null) {
+            return 0;
+        }
+        return 1 + contarRecursivo(nodo.getNext());
+    }
 }

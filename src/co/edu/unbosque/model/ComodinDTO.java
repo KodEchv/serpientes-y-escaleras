@@ -23,7 +23,9 @@ package co.edu.unbosque.model;
  * ya que todos esos calculos ocurren en tiempo de ejecucion.</p>
  *
  */
-public class ComodinDTO {
+public class ComodinDTO implements java.io.Serializable {
+
+    private static final long serialVersionUID = 2L;
 
     /** Numero de casilla donde esta ubicado el comodin (entre 2 y 99). */
     private int posicion;

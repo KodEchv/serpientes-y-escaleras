@@ -1,215 +1,33 @@
 package co.edu.unbosque.view;
 
-import java.awt.event.ActionListener;
-
-import co.edu.unbosque.model.CasillaDTO;
-import co.edu.unbosque.model.JugadorDTO;
-
-/**
- * Fachada de la capa de vista del juego "Escaleras y Serpientes a lo Bosque".
- * Centraliza todas las operaciones de actualizacion y navegacion entre paneles,
- * de modo que el controlador no interactue directamente con los componentes Swing.
- *
- * <p>El controlador unicamente usa esta clase para:</p>
- * <ul>
- *   <li>Navegar entre paneles (menu, configuracion, juego, ganador).</li>
- *   <li>Actualizar el estado visual del tablero y los jugadores.</li>
- *   <li>Registrar listeners de los botones principales.</li>
- *   <li>Leer la configuracion ingresada por el usuario.</li>
- * </ul>
- *
- */
 public class ViewFacade {
 
-    /** Referencia a la ventana principal que contiene todos los paneles. */
     private VentanaPrincipal ventana;
+    private PanelMenuInicio panelMenu;
+    private PanelConfiguracion panelConfiguracion;
+    private PanelJuego panelJuego;
+    private PanelGanador panelGanador;
 
-    /**
-     * Constructor de ViewFacade.
-     *
-     * @param ventana Referencia a la VentanaPrincipal ya inicializada.
-     */
-    public ViewFacade(VentanaPrincipal ventana) {
-        this.ventana = ventana;
+    public ViewFacade() {
+        ventana            = new VentanaPrincipal();
+        panelMenu          = ventana.getPanelMenu();
+        panelConfiguracion = ventana.getPanelConfiguracion();
+        panelJuego         = ventana.getPanelJuego();
+        panelGanador       = ventana.getPanelGanador();
     }
 
-    // ---------------------------------------------------------------
-    // Navegacion entre paneles
-    // ---------------------------------------------------------------
+    public VentanaPrincipal getVentana() { return ventana; }
+    public void setVentana(VentanaPrincipal ventana) { this.ventana = ventana; }
 
-    /**
-     * Navega al panel del menu principal.
-     */
-    public void mostrarMenu() {
-        ventana.navegarA(VentanaPrincipal.CLAVE_MENU);
-    }
+    public PanelMenuInicio getPanelMenu() { return panelMenu; }
+    public void setPanelMenu(PanelMenuInicio panelMenu) { this.panelMenu = panelMenu; }
 
-    /**
-     * Navega al panel de configuracion de partida.
-     */
-    public void mostrarConfiguracion() {
-        ventana.navegarA(VentanaPrincipal.CLAVE_CONFIG);
-    }
+    public PanelConfiguracion getPanelConfiguracion() { return panelConfiguracion; }
+    public void setPanelConfiguracion(PanelConfiguracion panelConfiguracion) { this.panelConfiguracion = panelConfiguracion; }
 
-    /**
-     * Navega al panel del juego activo.
-     */
-    public void mostrarJuego() {
-        ventana.navegarA(VentanaPrincipal.CLAVE_JUEGO);
-    }
+    public PanelJuego getPanelJuego() { return panelJuego; }
+    public void setPanelJuego(PanelJuego panelJuego) { this.panelJuego = panelJuego; }
 
-    // ---------------------------------------------------------------
-    // Actualizacion del estado del juego
-    // ---------------------------------------------------------------
-
-    /**
-     * Actualiza el tablero y todos los subpaneles del juego con el estado del turno actual.
-     *
-     * @param casillas      Array de CasillaDTO con el estado de cada casilla (indice 1-100).
-     * @param jugadores     Array de JugadorDTO con el estado actual de los jugadores.
-     * @param indiceActual  Indice del jugador cuyo turno esta activo.
-     * @param dado          Valor del dado lanzado en este turno (0 si no se ha lanzado).
-     * @param evento        Descripcion del evento ocurrido en este turno.
-     */
-    public void actualizarTablero(CasillaDTO[] casillas, JugadorDTO[] jugadores,
-                                   int indiceActual, int dado, String evento) {
-        ventana.getPanelJuego().actualizarEstado(casillas, jugadores, indiceActual, dado, evento);
-    }
-
-    /**
-     * Carga la pantalla de ganador con los datos finales de la partida y navega a ella.
-     *
-     * @param ganador     JugadorDTO del jugador que gano.
-     * @param ranking     Array de Object (RankingDTO) con el ranking final ordenado.
-     * @param movimientos Total de movimientos realizados en la partida.
-     * @param serpientes  Total de veces que alguien cayo en una serpiente.
-     * @param escaleras   Total de veces que alguien subio por una escalera.
-     */
-    public void mostrarGanador(JugadorDTO ganador, Object[] ranking,
-                                int movimientos, int serpientes, int escaleras) {
-        ventana.getPanelGanador().cargar(ganador, ranking, movimientos, serpientes, escaleras);
-        ventana.navegarA(VentanaPrincipal.CLAVE_GANADOR);
-    }
-
-    /**
-     * Inicializa las conexiones visuales del tablero una sola vez al iniciar la partida.
-     * Delega la operacion al PanelJuego de la ventana principal.
-     *
-     * @param serpientes Array de pares {cabeza, cola} de cada serpiente en el tablero.
-     * @param escaleras  Array de pares {base, cima} de cada escalera en el tablero.
-     */
-    public void inicializarConexionesTablero(int[][] serpientes, int[][] escaleras) {
-        ventana.getPanelJuego().inicializarConexionesTablero(serpientes, escaleras);
-    }
-
-    /**
-     * Habilita o deshabilita el boton de lanzar dado.
-     *
-     * @param habilitado true para habilitar el boton, false para deshabilitarlo.
-     */
-    public void habilitarBotonDado(boolean habilitado) {
-        ventana.getPanelJuego()
-               .getPanelControlJuego()
-               .getPanelDado()
-               .habilitarBoton(habilitado);
-    }
-
-    // ---------------------------------------------------------------
-    // Registro de listeners externos (desde el controlador)
-    // ---------------------------------------------------------------
-
-    /**
-     * Conecta un ActionListener al boton LANZAR DADO.
-     *
-     * @param al ActionListener del controlador que maneja el lanzamiento.
-     */
-    public void setListenerLanzarDado(ActionListener al) {
-        ventana.getPanelJuego()
-               .getPanelControlJuego()
-               .getPanelDado()
-               .setListenerLanzar(al);
-    }
-
-    /**
-     * Conecta un ActionListener al boton FINALIZAR PARTIDA.
-     *
-     * @param al ActionListener del controlador que maneja la finalizacion.
-     */
-    public void setListenerFinalizar(ActionListener al) {
-        ventana.getPanelJuego()
-               .getPanelControlJuego()
-               .setListenerFinalizar(al);
-    }
-
-    /**
-     * Conecta un ActionListener al boton INICIAR PARTIDA del panel de configuracion.
-     *
-     * @param al ActionListener del controlador que inicia la partida.
-     */
-    public void setListenerIniciar(ActionListener al) {
-        ventana.getPanelConfiguracion().setListenerIniciar(al);
-    }
-
-    /**
-     * Conecta un ActionListener al boton REGRESAR AL MENU del panel de control del juego.
-     *
-     * @param al ActionListener del controlador que navega al menu.
-     */
-    public void setListenerRegresar(ActionListener al) {
-        ventana.getPanelJuego().getPanelControlJuego().setListenerRegresar(al);
-    }
-
-    // ---------------------------------------------------------------
-    // Validacion de la vista
-    // ---------------------------------------------------------------
-
-    /**
-     * Delega la validacion de nombres al panel de configuracion.
-     * Muestra un dialogo de error si algun nombre esta vacio.
-     *
-     * @return true si todos los nombres son validos.
-     */
-    public boolean validarNombres() {
-        return ventana.getPanelConfiguracion().validarNombres();
-    }
-
-    // ---------------------------------------------------------------
-    // Lectura de configuracion del usuario
-    // ---------------------------------------------------------------
-
-    /**
-     * Retorna los nombres de los jugadores ingresados en el panel de configuracion.
-     *
-     * @return Array de String con los nombres (uno por jugador activo).
-     */
-    public String[] obtenerNombresJugadores() {
-        return ventana.getPanelConfiguracion().obtenerNombresJugadores();
-    }
-
-    /**
-     * Retorna la cantidad de jugadores seleccionada en el panel de configuracion.
-     *
-     * @return Numero de jugadores (2, 3 o 4).
-     */
-    public int obtenerCantidadJugadores() {
-        return ventana.getPanelConfiguracion().obtenerCantidadJugadores();
-    }
-
-    /**
-     * Retorna la cantidad de serpientes configurada en el panel de configuracion.
-     *
-     * @return Cantidad de serpientes (1 a 12).
-     */
-    public int obtenerCantidadSerpientes() {
-        return ventana.getPanelConfiguracion().obtenerCantidadSerpientes();
-    }
-
-    /**
-     * Retorna la cantidad de escaleras configurada en el panel de configuracion.
-     *
-     * @return Cantidad de escaleras (1 a 12).
-     */
-    public int obtenerCantidadEscaleras() {
-        return ventana.getPanelConfiguracion().obtenerCantidadEscaleras();
-    }
+    public PanelGanador getPanelGanador() { return panelGanador; }
+    public void setPanelGanador(PanelGanador panelGanador) { this.panelGanador = panelGanador; }
 }
